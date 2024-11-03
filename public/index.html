@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+    <title>Cluedo Game</title>
+</head>
+
+<body>
+    <div id="main-menu" class="container text-center my-5" style="display: block;">
+        <h2 class="mb-4">Welcome to Cluedo</h2>
+        <button id="hostGameBtn" class="btn btn-primary btn-lg mx-2">Host Game</button>
+        <button id="joinGameBtn" class="btn btn-secondary btn-lg mx-2">Join Game</button>
+    </div>
+
+    <div id="player-menu" class="container text-center my-5" style="display: none;">
+        <h3 class="mb-3" id="joinGameRoomH3">Join an Existing Game Room</h3>
+        <div class="form-group" id="joinRoomForm">
+            <input id="roomCodeInput" class="form-control text-center" placeholder="Enter Room Code"
+                style="max-width: 300px; margin: 0 auto;" required /> <br>
+            <input id="usernameInput" class="form-control text-center" placeholder="Enter username"
+                style="max-width: 300px; margin: 0 auto;" required />
+            <br>
+            <button id="joinRoomBtn" class="btn btn-primary btn-lg">Join Room</button>
+        </div>
+    </div>
+
+
+    <div id="game-room" class="container text-center my-5" style="display:none;">
+        <!-- Room Code Display -->
+        <h3 class="mb-4">Room Code: <span id="roomCodeDisplay" class="badge bg-dark text-white px-3 py-2"
+                style="font-family: Consolas, sans-serif; font-size: 1.7rem;"></span>
+        </h3>
+
+        <!-- Title for Players in Room -->
+        <h5 class="mb-3">Players in the Room</h5>
+
+        <!-- Player Names List -->
+        <ul id="playerNamesList" class="list-group d-inline-block text-start" style="max-width: 300px;">
+            <!-- Player names will be dynamically added here as list items -->
+        </ul>
+        <br>
+        <!-- Start Game Button -->
+        <button id="startGameBtn" class="btn btn-success btn-lg mt-4">Start Game</button>
+        <button id="endGameBtn" class="btn btn-danger btn-lg mt-4">End Game</button>
+    </div>
+
+    <div id="host-room" class="container text-center my-5" style="display:none;">
+        <h3 class="mb-4" id="titleHostName">The game has begun</h3>
+        <h4 class="mb-3">Players in the Room</h4>
+
+        <!-- Player Names List -->
+        <ul id="playerNamesListHost" class="list-group d-inline-block text-start" style="max-width: 300px;">
+            <!-- Player names will be dynamically added here as list items -->
+        </ul>
+        <br> <br>
+        <h5 class="mb-3" id="hiddenCards"></h5>
+
+        <button id="revealCardsBtn" class="btn btn-success btn-lg mt-4">Reveal Cards</button>
+        <button id="endGameBtn" class="btn btn-danger btn-lg mt-4">End Game</button>
+    </div>
+
+    <div id="cardTableSection" class="container text-center" style="display: none;">
+        <br>
+        <h3>Your cards!!</h3>
+        <br>
+        <table class="table table-bordered" id="cardTable">
+            <thead>
+                <tr>
+                    <th>Card</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cardTableBody">
+                <!-- Cards will be dynamically added here as table rows -->
+            </tbody>
+        </table>
+        <button id="toggleAllBtn" class="btn btn-warning">Hide All <i class="bi bi-eye-fill"></i></button>
+    </div>
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script src="./bundle.js"></script>
+</body>
+
+</html>
