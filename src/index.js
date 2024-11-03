@@ -270,8 +270,6 @@ document.querySelector("#joinRoomBtn").addEventListener('click', async () => {
 
                         // Check if gameStarted is true
                         if (gameStarted) {
-                            console.log("Game has started!");
-
                             // Stop listening to further changes
                             unsubscribe();
 
@@ -343,6 +341,7 @@ function addCardRow(cardName) {
 function showCards(roomCode, username) {
     document.getElementById("cardTableSection").style.display = "block";
     document.getElementById("player-menu").style.display = "none";
+    document.getElementById("cardSectionH3").innerHTML = `Hello, ${username}. Here are your cards. Play fairly. May the best detective win!!`;
 
     getDoc(doc(db, "ongoingGames", roomCode)).then((docSnap) => {
         const userIndex = docSnap.data().players.indexOf(username);
