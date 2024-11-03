@@ -129,7 +129,7 @@ document.querySelector("#hostGameBtn").addEventListener('click', async () => {
                 // Show host room UI and update player list after starting the game
                 document.getElementById("game-room").style.display = 'none';
                 document.getElementById("host-room").style.display = 'block';
-                document.getElementById("titleHostName").innerHTML = `Room Code: <span id="roomCodeDisplay" class="badge bg - dark text - white px - 3 py - 2" style = "font-family: Consolas, sans-serif; font-size: 1.7rem;" >${roomCodeL}</span ><br>The game has begun!!!`
+                document.getElementById("titleHostName").innerHTML = `Room Code: <span id="roomCodeDisplay" class="badge bg-dark text-white px-3 py-2" style = "font-family: Consolas, sans-serif; font-size: 1.7rem;" >${roomCodeL}</span ><br>The game has begun!!!`
                 playerArray = playerArray.filter(item => item !== null);
 
                 const playerListElement = document.getElementById("playerNamesListHost");
