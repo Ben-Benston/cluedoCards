@@ -198,6 +198,7 @@ document.querySelector("#joinGameBtn").addEventListener('click', () => {
     document.getElementById("joinRoomForm").style.display = "block";
 });
 
+
 // Add event listener to the form submission
 document.querySelector("#joinRoomBtn").addEventListener('click', async () => {
     // Get the room code entered by the user and trim any whitespace
@@ -239,51 +240,51 @@ document.querySelector("#joinRoomBtn").addEventListener('click', async () => {
                 // If the user exists in the players array and the game has started
                 if (userExists && docSnap.data().gameStarted) {
                     showCards(roomCodeL, userName);
-
+                    return
                 } else if (userExists && !docSnap.data().gameStarted) {
                     document.getElementById("joinGameRoomH3").innerHTML = `You have joined room with code ${roomCodeL}. Please wait for the host to begin the game`;
                     document.getElementById("joinRoomForm").style.display = "none";
+                    return
                 }
             }
-        } else {
+        }
 
-            let players = docSnap.data().players;
-            // Find the index of the first null value in the array
-            const nullIndex = players.findIndex(player => player === null);
+        let players = docSnap.data().players;
+        // Find the index of the first null value in the array
+        const nullIndex = players.findIndex(player => player === null);
 
-            if (nullIndex !== -1) {
-                // Replace the first null value with "be"
-                players[nullIndex] = userName;
+        if (nullIndex !== -1) {
+            // Replace the first null value with "be"
+            players[nullIndex] = userName;
 
-                // Update the players array in Firestore
-                setDoc(docRef, {
-                    players: players
-                }, { merge: true }).then(() => {
-                    setCookie("username", userName);
-                    setCookie("roomCode", roomCodeL);
-                    document.getElementById("joinGameRoomH3").innerHTML = `You have joined room with code ${roomCodeL}. Please wait for the host to begin the game`;
-                    document.getElementById("joinRoomForm").style.display = "none";
+            // Update the players array in Firestore
+            setDoc(docRef, {
+                players: players
+            }, { merge: true }).then(() => {
+                setCookie("username", userName);
+                setCookie("roomCode", roomCodeL);
+                document.getElementById("joinGameRoomH3").innerHTML = `You have joined room with code ${roomCodeL}. Please wait for the host to begin the game`;
+                document.getElementById("joinRoomForm").style.display = "none";
 
-                    const unsubscribe = onSnapshot(docRef, (docSnap) => {
-                        if (docSnap.exists()) {
-                            // Get the gameStarted field
-                            const gameStarted = docSnap.data().gameStarted;
+                const unsubscribe = onSnapshot(docRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        // Get the gameStarted field
+                        const gameStarted = docSnap.data().gameStarted;
 
-                            // Check if gameStarted is true
-                            if (gameStarted) {
-                                // Stop listening to further changes
-                                unsubscribe();
+                        // Check if gameStarted is true
+                        if (gameStarted) {
+                            // Stop listening to further changes
+                            unsubscribe();
 
-                                showCards(roomCodeL, userName);
-                            }
-                        } else {
-                            console.log("Document does not exist!");
+                            showCards(roomCodeL, userName);
                         }
-                    })
+                    } else {
+                        console.log("Document does not exist!");
+                    }
                 })
-            } else {
-                alert("No empty slot found in the players array.");
-            }
+            })
+        } else {
+            alert("No empty slot found in the players array.");
         }
     } catch (error) {
         // Log any errors encountered during the document retrieval
