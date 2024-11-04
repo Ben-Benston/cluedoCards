@@ -21,14 +21,36 @@ const db = getFirestore(app);
 let roomCodeL;
 let suspects = ["Colonel Mustard", "Mrs. Peacock", "Professor Plum", "Mrs. White", "Miss Scarlet", "Reverend Green"];
 let weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"];
-let rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
+const rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
+
+document.querySelector("#hostGameBtn").addEventListener("click", () => {
+    document.getElementById("board-menu").style.display = "block";
+    document.getElementById("main-menu").style.display = "none";
+})
+
+document.querySelector("#selectBoard").addEventListener("change", () => {
+    let selectionValue = document.getElementById("selectBoard").value;
+    if (selectionValue === 'indian') {
+        suspects = ["Colonel Mustard", "Mrs. Peacock", "Professor Plum", "Mrs. White", "Miss Scarlet", "Reverend Green"];
+        weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"];
+    } else if (selectionValue === 'harryP') {
+        suspects = ["Harry Potter", "Hermione Granger", "Ron Weasley", "Draco Malfoy", "Severus Snape", "Luna Lovegood"];
+        weapons = ["Wand", "Potion", "Rope", "Broomstick", "Howler", "Spanner", "Time Turner"];
+    } else if (selectionValue === 'knives') {
+        suspects = ["Gordan Ramsey", "Jamie Oliver", "Vikas Khanna", "Sanjeev Kapoor", "Garima Arora", "Goldy Brar"];
+        weapons = ["Chef's Knife", "Paring Knife", "Utility Knife", "Tomato Knife", "Boning Knife", "Bread Knife", "Santoku Knife", "Fillet Knife", "Cheese Knife"];
+    } else if (selectionValue === 'ww2') {
+        suspects = ["Winston Churchill", "Adolf Hitler", "Joseph Stalin", "Franklin Roosevelt", "Benito Mussolini", "Isoroku Yamamoto"];
+        weapons = ["Thompson Submachine Gun", "Colt 1911", "MP40", "Sten Gun", "Kar98K", "MG42", "Bazooka", "Atomic Bomb", "Walther P38"];
+    }
+})
 
 // Event listener for "Host Game" button to set up a new game room
-document.querySelector("#hostGameBtn").addEventListener('click', async () => {
+document.querySelector("#beginRoomBtn").addEventListener('click', async () => {
     // Generate unique room code and display the game room UI
     roomCodeL = generateRoomCode();
     document.getElementById("game-room").style.display = "block";
-    document.getElementById("main-menu").style.display = "none";
+    document.getElementById("board-menu").style.display = "none";
 
     // Create initial game data in Firestore with placeholders for cards and players
     await setDoc(doc(db, "ongoingGames", roomCodeL), {
@@ -78,7 +100,6 @@ document.querySelector("#hostGameBtn").addEventListener('click', async () => {
 
             // Stop the real-time listener after starting the game
             unsubscribe();
-            console.log("Snapshot listener stopped.");
 
             // Select random hidden cards for the game
             const suspectIndex = Math.floor(Math.random() * suspects.length);
@@ -116,10 +137,6 @@ document.querySelector("#hostGameBtn").addEventListener('click', async () => {
             const resultCards = playerCards.map((cards) => cards.length > 0 ? cards.join(':') : null);
             const finalPlayerCards = [...resultCards, ...Array(6 - playerCount).fill(null)];
 
-            // Log final card assignments and hidden cards
-            console.log(finalPlayerCards);
-            console.log(hiddenCardsL);
-
             // Update Firestore document to start the game and assign cards
             setDoc(gameRef, {
                 gameStarted: true,
@@ -146,13 +163,15 @@ document.querySelector("#hostGameBtn").addEventListener('click', async () => {
 });
 
 // Event listener for "End Game" button to delete game data from Firestore
-document.querySelector("#endGameBtn").addEventListener('click', () => {
+document.querySelector(".endGameBtn").addEventListener('click', () => {
     deleteDoc(doc(db, "ongoingGames", roomCodeL)).then(() => {
         // Reset UI to the main menu after game ends
         document.getElementById("main-menu").style.display = "block";
         document.getElementById("host-room").style.display = "none";
         document.getElementById("game-room").style.display = "none";
         document.getElementById("player-menu").style.display = "none";
+    }).catch((error) => {
+        console.log(error);
     });
 });
 
@@ -239,11 +258,27 @@ document.querySelector("#joinRoomBtn").addEventListener('click', async () => {
 
                 // If the user exists in the players array and the game has started
                 if (userExists && docSnap.data().gameStarted) {
-                    showCards(roomCodeL, userName);
+                    showCards(roomCodeL, getCookie("username"));
                     return
                 } else if (userExists && !docSnap.data().gameStarted) {
-                    document.getElementById("joinGameRoomH3").innerHTML = `You have joined room with code ${roomCodeL}. Please wait for the host to begin the game`;
+                    document.getElementById("joinGameRoomH3").innerHTML = `Hello, ${getCookie("username")}.You have rejoined room with code ${roomCodeL}. Please wait for the host to begin the game`;
                     document.getElementById("joinRoomForm").style.display = "none";
+                    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            // Get the gameStarted field
+                            const gameStarted = docSnap.data().gameStarted;
+
+                            // Check if gameStarted is true
+                            if (gameStarted) {
+                                // Stop listening to further changes
+                                unsubscribe();
+
+                                showCards(roomCodeL, getCookie("username"));
+                            }
+                        } else {
+                            console.log("Document does not exist!");
+                        }
+                    })
                     return
                 }
             }
@@ -263,7 +298,7 @@ document.querySelector("#joinRoomBtn").addEventListener('click', async () => {
             }, { merge: true }).then(() => {
                 setCookie("username", userName);
                 setCookie("roomCode", roomCodeL);
-                document.getElementById("joinGameRoomH3").innerHTML = `You have joined room with code ${roomCodeL}. Please wait for the host to begin the game`;
+                document.getElementById("joinGameRoomH3").innerHTML = `Hello, ${userName}.You have joined room with code ${roomCodeL}. Please wait for the host to begin the game`;
                 document.getElementById("joinRoomForm").style.display = "none";
 
                 const unsubscribe = onSnapshot(docRef, (docSnap) => {

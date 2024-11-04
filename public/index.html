@@ -22,6 +22,20 @@
         <button id="joinGameBtn" class="btn btn-secondary btn-lg mx-2">Join Game</button>
     </div>
 
+    <div id="board-menu" class="container text-center my-5" style="display: none;">
+        <h2 class="mb-4">Select Game Board</h2>
+        <div class="mb-3">
+            <select class="form-select form-select-lg" name="selectBoard" id="selectBoard">
+                <option selected>Select one</option>
+                <option value="indian">Cluedo Indian</option>
+                <option value="knives">Cluedo Knives Edition</option>
+                <option value="harryP">Cluedo Harry Potter Special</option>
+                <option value="ww2">Cluedo WW2 Realistic Edition</option>
+            </select>
+        </div>
+        <button id="beginRoomBtn" class="btn btn-primary btn-lg mx-2">Begin Room</button>
+    </div>
+
     <div id="player-menu" class="container text-center my-5" style="display: none;">
         <h3 class="mb-3" id="joinGameRoomH3">Join an Existing Game Room</h3>
         <div class="form-group" id="joinRoomForm">
@@ -51,7 +65,7 @@
         <br>
         <!-- Start Game Button -->
         <button id="startGameBtn" class="btn btn-success btn-lg mt-4">Start Game</button>
-        <button id="endGameBtn" class="btn btn-danger btn-lg mt-4">End Game</button>
+        <button id="endGameBtn" class="btn btn-danger btn-lg mt-4 endGameBtn">End Game</button>
     </div>
 
     <div id="host-room" class="container text-center my-5" style="display:none;">
@@ -66,7 +80,7 @@
         <h5 class="mb-3" id="hiddenCards"></h5>
 
         <button id="revealCardsBtn" class="btn btn-success btn-lg mt-4">Reveal Cards</button>
-        <button id="endGameBtn" class="btn btn-danger btn-lg mt-4">End Game</button>
+        <button id="endGameBtn" class="btn btn-danger btn-lg mt-4 endGameBtn">End Game</button>
     </div>
 
     <div id="cardTableSection" class="container text-center" style="display: none;">
