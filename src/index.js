@@ -20,7 +20,7 @@ const db = getFirestore(app);
 // Game variables for room code and lists of suspects, weapons, and rooms
 let roomCodeL;
 let suspects = ["Colonel Mustard", "Mrs. Peacock", "Professor Plum", "Mrs. White", "Miss Scarlet", "Reverend Green"];
-let weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"];
+let weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Spanner"];
 let rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
 
 document.querySelector("#hostGameBtn").addEventListener("click", () => {
@@ -32,7 +32,7 @@ document.querySelector("#selectBoard").addEventListener("change", () => {
     let selectionValue = document.getElementById("selectBoard").value;
     if (selectionValue === 'indian') {
         suspects = ["Colonel Mustard", "Mrs. Peacock", "Professor Plum", "Mrs. White", "Miss Scarlet", "Reverend Green"];
-        weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"];
+        weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Spanner"];
         rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
     } else if (selectionValue === 'harryP') {
         suspects = ["Harry Potter", "Hermione Granger", "Ron Weasley", "Draco Malfoy", "Severus Snape", "Luna Lovegood"];
@@ -48,7 +48,7 @@ document.querySelector("#selectBoard").addEventListener("change", () => {
         rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
     } else if (selectionValue === 'lourdes') {
         suspects = ["Satish", "Elizabeth Mathew", "Wagh", "Pratap", "Anne", "Shobha"];
-        weapons = ["Thompson Submachine Gun", "Colt 1911", "MP40", "Sten Gun", "Kar98K", "MG42", "Bazooka", "Atomic Bomb", "Walther P38"];
+        weapons = ["Chalk", "Duster", "Pencil", "Steel Scale", "Compass", "Bench", "Chemicals"];
         rooms = ["AV-Room", "Staff Room", "Basement", "Principal Office", "Back Alley", "Maxi Ground", "Library", "Terrace", "Washroom"];
     }
 })
