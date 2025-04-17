@@ -1,6 +1,7 @@
 // Import Firebase SDK functions needed for the project
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, getDocs, doc, setDoc, onSnapshot, getDoc, deleteDoc } from 'firebase/firestore';
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 // Firebase configuration for initializing the app
 const firebaseConfig = {
@@ -16,6 +17,12 @@ const firebaseConfig = {
 // Initialize Firebase app and get Firestore database reference
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// after firebaseApp initialization
+const appCheck = initializeAppCheck(firebaseApp, {
+    provider: new ReCaptchaV3Provider('6Lcn8RsrAAAAAGLcw29ewcdC4Azb0_eiHtC4VgBP'),
+    isTokenAutoRefreshEnabled: true,
+});
 
 // Game variables for room code and lists of suspects, weapons, and rooms
 let roomCodeL;
