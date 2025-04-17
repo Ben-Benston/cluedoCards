@@ -27,8 +27,8 @@ const appCheck = initializeAppCheck(firebaseApp, {
 // Game variables for room code and lists of suspects, weapons, and rooms
 let roomCodeL;
 let suspects = ["Colonel Mustard", "Mrs. Peacock", "Professor Plum", "Mrs. White", "Miss Scarlet", "Reverend Green"];
-let weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"];
-const rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
+let weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Spanner"];
+let rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
 
 document.querySelector("#hostGameBtn").addEventListener("click", () => {
     document.getElementById("board-menu").style.display = "block";
@@ -39,16 +39,24 @@ document.querySelector("#selectBoard").addEventListener("change", () => {
     let selectionValue = document.getElementById("selectBoard").value;
     if (selectionValue === 'indian') {
         suspects = ["Colonel Mustard", "Mrs. Peacock", "Professor Plum", "Mrs. White", "Miss Scarlet", "Reverend Green"];
-        weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"];
+        weapons = ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Spanner"];
+        rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
     } else if (selectionValue === 'harryP') {
         suspects = ["Harry Potter", "Hermione Granger", "Ron Weasley", "Draco Malfoy", "Severus Snape", "Luna Lovegood"];
         weapons = ["Wand", "Potion", "Rope", "Broomstick", "Howler", "Spanner", "Time Turner"];
+        rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
     } else if (selectionValue === 'knives') {
         suspects = ["Gordan Ramsey", "Jamie Oliver", "Vikas Khanna", "Sanjeev Kapoor", "Garima Arora", "Goldy Brar"];
         weapons = ["Chef's Knife", "Paring Knife", "Utility Knife", "Tomato Knife", "Boning Knife", "Bread Knife", "Santoku Knife", "Fillet Knife", "Cheese Knife"];
+        rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
     } else if (selectionValue === 'ww2') {
         suspects = ["Winston Churchill", "Adolf Hitler", "Joseph Stalin", "Franklin Roosevelt", "Benito Mussolini", "Isoroku Yamamoto"];
         weapons = ["Thompson Submachine Gun", "Colt 1911", "MP40", "Sten Gun", "Kar98K", "MG42", "Bazooka", "Atomic Bomb", "Walther P38"];
+        rooms = ["Ball Room", "Billiard Room", "Conservatory", "Dining Room", "Hall", "Kitchen", "Library", "Lounge", "Study"];
+    } else if (selectionValue === 'lourdes') {
+        suspects = ["Satish", "Elizabeth Mathew", "Wagh", "Pratap", "Anne", "Shobha"];
+        weapons = ["Chalk", "Duster", "Pencil", "Steel Scale", "Compass", "Bench", "Chemicals"];
+        rooms = ["AV-Room", "Staff Room", "Basement", "Principal Office", "Back Alley", "Maxi Ground", "Library", "Terrace", "Washroom"];
     }
 })
 
